@@ -25,19 +25,24 @@ public class PropertyCell extends Cell {
 
 	public int getRent() {
 		int rentToCharge = rent;
-		String [] monopolies = owner.getMonopolies();
-		for(int i = 0; i < monopolies.length; i++) {
-			if(monopolies[i].equals(colorGroup)) {
-				rentToCharge = rent * 2;
-			}
-		}
+		rentToCharge = caclcMonopoliesRent(rentToCharge);
 		if(numHouses > 0) {
 			rentToCharge = rent * (numHouses + 1);
 		}
 		return rentToCharge;
 	}
 
-	public void playAction() {
+	private int caclcMonopoliesRent(int rentToCharge) {
+		String [] monopolies = owner.getMonopolies();
+		for(int i = 0; i < monopolies.length; i++) {
+			if(monopolies[i].equals(colorGroup)) {
+				rentToCharge = rent * 2;
+			}
+		}
+		return rentToCharge;
+	}
+
+	public boolean playAction(String newParam) {
 		Player currentPlayer = null;
 		if(!isAvailable()) {
 			currentPlayer = GameMaster.instance().getCurrentPlayer();
